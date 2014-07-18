@@ -1,3 +1,12 @@
+class Game
+	attr_accessor :world, :seeds
+
+	def initialize(world=World.new, seeds=[])
+		@world = world
+		@seeds = seeds
+	end
+end
+
 class World
 	attr_accessor :rows, :cols, :cell_grid
 
@@ -6,12 +15,18 @@ class World
 		@cols = cols
 		@cell_grid = Array.new(rows) do |row|
 			Array.new(cols) do |col|
-				Cell.new
+				Cell.new(col, row)
 			end
 		end
 	end
 end
 
 class Cell
+	attr_accessor :alive, :x, :y
 
+	def initialize(x=0, y=0)
+		@x = x
+		@y = y
+		@alive = false
+	end
 end
