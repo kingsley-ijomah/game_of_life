@@ -3,6 +3,9 @@ require 'rspec'
 require_relative '../game_of_life'
 
 describe 'Game of life' do
+  
+  let!(:world) { World.new }
+  let!(:game) { Game.new }
 
 	context 'world' do
 		subject { World.new }
@@ -15,6 +18,7 @@ describe 'Game of life' do
 			expect(subject).to respond_to :rows
 			expect(subject).to respond_to :cols
 			expect(subject).to respond_to :cell_grid
+      expect(subject).to respond_to :neighbours_around_cell
 		end
 
 		it 'checks that cell_grid is an array' do
@@ -33,7 +37,7 @@ describe 'Game of life' do
 
 		it 'responds to methods' do
 			expect(subject).to respond_to :alive
-			expect(subject).to respond_to :x
+		expect(subject).to respond_to :x
 			expect(subject).to respond_to :y
 		end
 
@@ -51,7 +55,7 @@ describe 'Game of life' do
 		end
 	end
 
-	context 'World' do
+	context 'Game' do
 		subject { Game.new }
 
 		it 'responds to methods' do
@@ -63,6 +67,13 @@ describe 'Game of life' do
 			expect(subject.world.is_a? World).to be(true)
 			expect(subject.seeds.is_a? Array).to be(true)
 		end
+    
+    it 'should turn dead cells to life cells' do
+      game = Game.new(world, [[0, 1], [1, 1]])
+      expect(world.cell_grid[0][1].alive?).to eq true
+      expect(world.cell_grid[1][1].alive?).to eq true
+    end
+
 	end
 
 	context 'Rules' do

@@ -4,6 +4,9 @@ class Game
 	def initialize(world=World.new, seeds=[])
 		@world = world
 		@seeds = seeds
+    seeds.each do |seed|
+      world.cell_grid[seed[0]][seed[1]].activate
+    end
 	end
 end
 
@@ -19,6 +22,10 @@ class World
 			end
 		end
 	end
+
+  def neighbours_around_cell(cell)
+
+  end
 end
 
 class Cell
@@ -29,4 +36,12 @@ class Cell
 		@y = y
 		@alive = false
 	end
+
+  def activate
+    @alive = true
+  end
+
+  def alive?
+    alive
+  end
 end
