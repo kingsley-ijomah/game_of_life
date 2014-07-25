@@ -7,7 +7,7 @@ describe 'Game of life' do
   let!(:world) { World.new }
   let!(:game) { Game.new }
 
-	context 'world' do
+	context 'World' do
 		subject { World.new }
 
 		it 'should create a new world instance' do
@@ -18,7 +18,7 @@ describe 'Game of life' do
 			expect(subject).to respond_to :rows
 			expect(subject).to respond_to :cols
 			expect(subject).to respond_to :cell_grid
-      expect(subject).to respond_to :neighbours_around_cell
+      expect(subject).to respond_to :live_neighbours_around_cell
 		end
 
 		it 'checks that cell_grid is an array' do
@@ -30,6 +30,18 @@ describe 'Game of life' do
 				end
 			end
 		end
+
+    it 'should detect live  neighbours to the north' do
+      subject.cell_grid[0][1].activate
+      cell =  subject.cell_grid[1][1]
+      expect(subject.live_neighbours_around_cell(cell).count).to eq 1
+    end
+
+    it 'should detect live neighbour to the west' do
+      subject.cell_grid[1][0].activate
+      cell = subject.cell_grid[1][1]
+      expect(subject.live_neighbours_around_cell(cell).count).to eq 1
+    end
 	end
 
 	context 'Cell' do
