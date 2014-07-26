@@ -42,6 +42,18 @@ describe 'Game of life' do
       cell = subject.cell_grid[1][1]
       expect(subject.live_neighbours_around_cell(cell).count).to eq 1
     end
+
+    it 'should detect live neighbours to the east' do
+      subject.cell_grid[1][2].activate
+      cell = subject.cell_grid[1][1]
+      expect(subject.live_neighbours_around_cell(cell).count).to eq 1
+    end
+
+    it 'should detect live neighbours to the south' do
+      subject.cell_grid[2][1].activate
+      cell = subject.cell_grid[1][1]
+      expect(subject.live_neighbours_around_cell(cell).count).to eq 1
+    end
 	end
 
 	context 'Cell' do

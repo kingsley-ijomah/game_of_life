@@ -36,7 +36,19 @@ class World
       end
     end
     if cell.x > 0
-      southern_cell = self.cell_grid[cell.y][cell.x - 1]
+      western_cell = self.cell_grid[cell.y][cell.x - 1]
+      if western_cell.alive?
+        live_cells << western_cell
+      end
+    end
+    if cell.x < cols
+      eastern_cell = self.cell_grid[cell.y][cell.x + 1]
+      if eastern_cell.alive?
+        live_cells << eastern_cell
+      end
+    end
+    if cell.y < rows
+      southern_cell = self.cell_grid[cell.y + 1][cell.x]
       if southern_cell.alive?
         live_cells << southern_cell
       end
