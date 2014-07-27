@@ -19,6 +19,7 @@ describe 'Game of life' do
 			expect(subject).to respond_to :cols
 			expect(subject).to respond_to :cell_grid
       expect(subject).to respond_to :live_neighbours_around_cell
+      expect(subject).to respond_to :cells
 		end
 
 		it 'checks that cell_grid is an array' do
@@ -86,8 +87,9 @@ describe 'Game of life' do
 
 		it 'responds to methods' do
 			expect(subject).to respond_to :alive
-		expect(subject).to respond_to :x
+		  expect(subject).to respond_to :x
 			expect(subject).to respond_to :y
+      expect(subject).to respond_to :die!
 		end
 
 		it 'should create a new cell instance' do
@@ -110,6 +112,7 @@ describe 'Game of life' do
 		it 'responds to methods' do
 			expect(subject).to respond_to :world
 			expect(subject).to respond_to :seeds
+      expect(subject).to respond_to :tick!
 		end
 
 		it 'initializes properly' do
@@ -126,13 +129,31 @@ describe 'Game of life' do
 	end
 
 	context 'Rules' do
-		let!(:game) { Game.new }
-
 		context 'Rule 1 - Any live cell with fewer than two live neighbours dies - under population' do
 			it 'kills live cell with 1 live neighbour' do
-
+        game = Game.new(world, [[0, 0], [1, 0]])
+        game.tick!
+        expect(world.cell_grid[0][0].alive?).to eq false
+        expect(world.cell_grid[1][0].alive?).to eq false
 			end
 		end
+
+    context 'Rule 2 - Any live cells with 2 or 3 live neighbours lives on to the next generation' do
+      it 'keeps a live cell with 2 or 3 live neighbours alive' do
+         game = Game.new(world, [[0, 0], [0, 1], [1, 0]])
+         game.tick!
+         expect(world.cell_grid[0][0].alive?).to eq true  
+      end
+    end
+
+    context 'Rule 3 - Any live cells with more than 3 live neighbours dies - over population' do 
+      game = Game.new(world, [[0, 0], [0, 1], [1, 0], [1, 1], [1, 2])
+      game.tick!
+      expect(world.cell_grid[1][1].alive?).to eq false  
+    end
+
+    context 'Rule 4 - Any dead cells with exactly 3 live neighbours become a live cell - resurrection' do
+    end
 	end
 
 end
