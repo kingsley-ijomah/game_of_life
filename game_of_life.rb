@@ -26,11 +26,11 @@ class Game
       end
       # Rule 3
       if cell.alive? and live_neighbours.count > 3
-        cell.die!
+       kill_next_round << cell 
       end
       # Rule 4
       if cell.dead? and live_neighbours.count == 3
-        cell.activate
+       revive_next_round << cell
       end
     end 
     
