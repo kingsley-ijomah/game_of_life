@@ -140,16 +140,15 @@ describe 'Game of life' do
 
     context 'Rule 2 - Any live cells with 2 or 3 live neighbours lives on to the next generation' do
       it 'keeps a live cell with 2 or 3 live neighbours alive' do
-         game = Game.new(world, [[0, 0], [0, 1], [1, 0]])
-         game.tick!
-         expect(world.cell_grid[0][0].alive?).to eq true  
+        game = Game.new(world, [[0, 0], [1, 0], [2, 0]])
+        game.tick!
+        expect(world.cell_grid[0][0].alive?).to eq false
+        expect(world.cell_grid[1][0].alive?).to eq true
+        expect(world.cell_grid[2][0].alive?).to eq false
       end
     end
 
     context 'Rule 3 - Any live cells with more than 3 live neighbours dies - over population' do 
-      game = Game.new(world, [[0, 0], [0, 1], [1, 0], [1, 1], [1, 2])
-      game.tick!
-      expect(world.cell_grid[1][1].alive?).to eq false  
     end
 
     context 'Rule 4 - Any dead cells with exactly 3 live neighbours become a live cell - resurrection' do
