@@ -7,6 +7,10 @@ class Game
     seeds.each do |seed|
       world.cell_grid[seed[0]][seed[1]].activate
     end
+
+    if seeds.empty?
+      world.random_seed
+    end
 	end
 
   def tick!
@@ -63,6 +67,16 @@ class World
 			end
 		end
 	end
+
+  def live_cells
+    @cells.select { |cell| cell.alive }
+  end
+
+  def random_seed
+    @cells.each do |cell|
+      cell.alive = [true, false].sample
+    end
+  end
 
   def live_neighbours_around_cell(cell)
     live_cells = []

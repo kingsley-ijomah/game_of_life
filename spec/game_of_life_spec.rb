@@ -20,6 +20,8 @@ describe 'Game of life' do
 			expect(subject).to respond_to :cell_grid
       expect(subject).to respond_to :live_neighbours_around_cell
       expect(subject).to respond_to :cells
+      expect(subject).to respond_to :random_seed
+      expect(subject).to respond_to :live_cells
 		end
 
 		it 'checks that cell_grid is an array' do
@@ -78,6 +80,11 @@ describe 'Game of life' do
       subject.cell_grid[2][0].activate
       cell = subject.cell_grid[1][1]
       expect(subject.live_neighbours_around_cell(cell).count).to eq 1
+    end
+
+    it 'should use random seed to populate cells' do
+      game = Game.new(subject)
+      expect(subject.live_cells.count).to_not be 0
     end
 
 	end
